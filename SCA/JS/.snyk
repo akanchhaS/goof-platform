@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.22.1
+version: v1.21.5
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-PATHPARSE-1077067:
@@ -12,4 +12,8 @@ ignore:
         reason: ' Added from CLI through .snyk file and snyk ignores'
         expires: 2021-09-09T00:00:00.000Z
         created: 2021-08-27T21:04:55.621Z
-patch: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:ms:20151024':
+    - humanize-ms > ms:
+        patched: '2021-08-31T18:23:00.913Z'
