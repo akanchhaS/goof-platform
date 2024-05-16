@@ -86,3 +86,61 @@ export class AboutComponent implements OnInit {
     })
   }
 }
+
+  constructor (public sanitizer: DomSanitizer, private imageCaptchaService: ImageCaptchaService, private dataSubjectService: DataSubjectService) { }
+  ngOnInit () {
+    this.needCaptcha()
+    this.dataRequest = {}
+  }
+
+  needCaptcha () {
+    let nowTime = new Date()
+    let timeOfCaptcha = localStorage.getItem('lstdtxprt') ? new Date(JSON.parse(String(localStorage.getItem('lstdtxprt')))) : new Date(0)
+    if (nowTime.getTime() - timeOfCaptcha.getTime() < 300000) {
+      this.getNewCaptcha()
+      this.presenceOfCaptcha = true
+    }
+  }
+
+  getNewCaptcha () {
+    this.imageCaptchaService.getCaptcha().subscribe((data: any) => {
+      this.captcha = this.sanitizer.bypassSecurityTrustHtml(data.image)
+    })
+  }
+
+  save () {
+    if (this.presenceOfCaptcha) {
+      this.dataRequest.answer = this.captchaControl.value
+    }
+    this.dataRequest.format = this.formatControl.value
+    this.dataSubjectService.dataExport(this.dataRequest).subscribe((data: any) => {
+      this.error = null
+      this.confirmation = data.confirmation
+      this.userData = data.userData
+      window.open('', '_blank', 'width=500')!.document.write(this.userData)
+      this.lastSuccessfulTry = new Date()
+      localStorage.setItem('lstdtxprt',JSON.stringify(this.lastSuccessfulTry))
+      this.ngOnInit()
+      this.resetForm()
+    }, (error) => {
+      this.error = error.error
+      this.confirmation = null
+      this.resetFormError()
+    })
+  }
+
+  resetForm () {
+    this.captchaControl.markAsUntouched()
+    this.captchaControl.markAsPristine()
+    this.captchaControl.setValue('')
+    this.formatControl.markAsUntouched()
+    this.formatControl.markAsPristine()
+    this.formatControl.setValue('')
+  }
+
+  resetFormError () {
+    this.captchaControl.markAsUntouched()
+    this.captchaControl.markAsPristine()
+    this.captchaControl.setValue('')
+  }
+}
