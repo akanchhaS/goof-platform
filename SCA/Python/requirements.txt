@@ -1,8 +1,8 @@
 APScheduler==3.3.1
-Flask==0.12.2
+Flask==0.12.3
 Flask-Assets==0.12
-Jinja2==2.9.6
-Werkzeug==0.12.2
+Jinja2==2.11.3
+Werkzeug==0.15.3
 certifi==2017.4.17
 chardet==3.0.3
 click==6.7
@@ -14,7 +14,7 @@ google-api-python-client==1.6.2
 httplib2==0.10.3
 idna==2.5
 itsdangerous==0.24
-lxml==4.5.0
+lxml==4.9.1
 oauth2client==4.1.1
 pyasn1==0.2.3
 pyasn1-modules==0.0.9
