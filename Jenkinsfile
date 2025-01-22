@@ -34,7 +34,7 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         script {
-          sh 'docker build -t goof-platform-app .'
+          sh 'docker build -f Container/Dockerfile -t goof-platform-app .'
         }
 
       }
@@ -65,7 +65,7 @@ pipeline {
         stage('Snyk Container') {
           steps {
             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-              sh 'snyk container test goof-platform-app --file=Dockerfile --sarif-file-output=results-container.sarif'
+              sh 'snyk container test goof-platform-app --file=Container/Dockerfile --sarif-file-output=results-container.sarif'
             }
 
             recordIssues(tool: sarif(name: 'Snyk Container', id: 'snyk-container', pattern: 'results-container.sarif'))
