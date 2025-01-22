@@ -1,18 +1,18 @@
 pipeline {
     agent any
     environment {
-        SNYK_TOKEN = credentials('SNYK_TOKEN')
+        SNYK_TOKEN = credentials('SNYK_TOKEN') // Inject Snyk token securely
     }
     tools { 
-        nodejs "NodeJS 18.4.0" 
+        nodejs "NodeJS 18.4.0" // Ensure NodeJS is installed for Snyk CLI
     }
-  stages {
+    stages {
         stage('Checkout Source Code') {
             steps {
                 checkout scm // Use Jenkins to check out the source code
             }
         }
-    stages {
+
         stage('Install Snyk CLI') {
             steps {
                 script {
@@ -34,6 +34,7 @@ pipeline {
                 sh 'echo no-op'
             }
         }
+
         stage('Build Docker Image') {
             steps {
                 script {
@@ -42,6 +43,7 @@ pipeline {
                 }
             }
         }
+
         stage('Snyk') {
             parallel {
                 stage('Snyk Open Source') {
@@ -79,7 +81,7 @@ pipeline {
             }
         }
     }
-post {
+    post {
         always {
             // Clean up Docker resources
             script {
