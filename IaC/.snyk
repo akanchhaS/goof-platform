@@ -1,0 +1,20 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.22.1
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-CC-TF-9:
+    - '*':
+        reason: ' Added from CLI for TF'
+        expires: 2021-09-09T00:00:00.000Z
+        created: 2021-08-25T23:34:49.444Z
+  SNYK-CC-TF-8:
+    - '*':
+        reason: ' Added from CLI for TF again'
+        expires: 2021-09-09T00:00:00.000Z
+        created: 2021-08-26T13:12:05.139Z
+  SNYK-CC-TF-7:
+    - '*':
+        reason: ' Added from CLI for TF again'
+        expires: 2021-09-09T00:00:00.000Z
+        created: 2021-08-26T14:43:32.053Z
+patch: {}
